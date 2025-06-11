@@ -1,3 +1,23 @@
+
+/*
+MariaDB에서 새로운 데이터베이스와 계정 생성하기
+: 오라클에서는 계정만 생성하면 도지만 MySQL(MariaDB)에서는
+새로운 DB와 User를 동시에 생성한 후 권한설정을 해야한다.
+*/
+
+## 아래 작업은 root 계정으로 접속한 후 실행해야 함 ##
+
+# 새로운 데이터베이스 생성
+CREATE DATABASE sample_db;
+# 새로운 사용자 계정 생성(로컬에서만 접속할 수 있게 설정)
+CREATE USER 'sample_user'@'localhost' IDENTIFIED BY '1234';
+# sample_db를 사용할 수 있는 모든 권한을 sample_user에게 부여
+GRANT ALL PRIVILEGES ON sample_db.* TO 'sample_user'@'localhost';
+# 이 명령을 통해 위에서 설정한 사항을 MariaDB에 적용 
+FLUSH PRIVILEGES;
+
+## 여기서 부터는 sample_user 계정으로 접속한 후 작성해주세요 ##board
+
 /*
 테이블 생성하기제약조건
 	PRIMARY KEY : 기본키 지정. 
@@ -159,7 +179,28 @@ VALUE ('제목5', '내용5입니다','korea',NOW(),0);
 
 
 
+CREATE TABLE phonebook
+(
+	num INT NOT NULL AUTO_INCREMENT, /* 일련번호. 자동증가컬럼. */
+	
+	name VARCHAR(3) NOT NULL, /* 이름 */
+	
+	phoneNum VARCHAR(11) NOT NULL,	/* 전화번호 */
+	
+	address VARCHAR(30) NOT NULL, /* 주소 */
+	
+	postdate DATETIME DEFAULT CURRENT_TIMESTAMP, /* 작성일. 현재시간을
+																디폴트 값으로 지정 */
+	PRIMARY KEY (num) 
+);
 
+CREATE TABLE phonebooks (
+    num INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    phoneNum VARCHAR(20),
+    address VARCHAR(100),
+    postdate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
 
 
